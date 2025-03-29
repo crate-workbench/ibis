@@ -433,6 +433,28 @@ services:
     volumes:
       - oracle:/opt/oracle/data
 
+  cratedb:
+    environment:
+      CRATEDB_PASSWORD:
+      CRATEDB_SCHEMA: ibis_testing
+      CRATEDB_USER: crate
+    image: crate/crate:nightly
+    command: crate -Cdiscovery.type=single-node -Ccluster.routing.allocation.disk.threshold_enabled=false
+    healthcheck:
+      interval: 1s
+      retries: 30
+      test:
+        - CMD-SHELL
+        - curl localhost:4200
+      timeout: 5s
+    ports:
+      - 4200:4200
+      - 5432:5432
+    networks:
+      - cratedb
+    volumes:
+      - cratedb:/data
+
 networks:
   impala:
   mysql:
@@ -442,6 +464,7 @@ networks:
   trino:
   druid:
   oracle:
+  cratedb:
 
 volumes:
   broker_var:
@@ -458,3 +481,4 @@ volumes:
   oracle:
   postgres:
   trino-postgres:
+  cratedb:

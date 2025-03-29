@@ -95,6 +95,7 @@ snowflake-sqlalchemy = { version = ">=1.4.1,<2", optional = true, extras = [
 sqlalchemy = { version = ">=1.4,<3", optional = true }
 sqlalchemy-views = { version = ">=0.3.1,<1", optional = true }
 trino = { version = ">=0.321,<1", optional = true, extras = ["sqlalchemy"] }
+crate = { version = ">=0.33.0", optional = true, extras = ["sqlalchemy"] }
 
 [tool.poetry.group.dev.dependencies]
 black = ">=22.1.0,<24"
@@ -145,6 +146,7 @@ seaborn = { version = ">=0.12.2,<1", python = "^3.10" }
 all = [
   "black",
   "clickhouse-connect",
+  "cratedb",
   "dask",
   "datafusion",
   "db-dtypes",
@@ -183,6 +185,7 @@ bigquery = [
   "pydata-google-auth",
 ]
 clickhouse = ["clickhouse-connect", "sqlalchemy"]
+cratedb = ["crate", "sqlalchemy"]
 dask = ["dask", "regex"]
 datafusion = ["datafusion"]
 druid = ["pydruid", "sqlalchemy"]
@@ -218,6 +221,7 @@ deltalake = ["deltalake"]
 [tool.poetry.plugins."ibis.backends"]
 bigquery = "ibis.backends.bigquery"
 clickhouse = "ibis.backends.clickhouse"
+cratedb = "ibis.backends.cratedb"
 dask = "ibis.backends.dask"
 datafusion = "ibis.backends.datafusion"
 druid = "ibis.backends.druid"
@@ -345,6 +349,7 @@ markers = [
   "sqlalchemy_only: tests for SQLAlchemy based backends",
   "bigquery: BigQuery tests",
   "clickhouse: ClickHouse tests",
+  "cratedb: CrateDB tests",
   "dask: Dask tests",
   "datafusion: Apache Datafusion tests",
   "druid: Apache Druid tests",

@@ -315,6 +315,30 @@ class PostgresType(SqlglotType):
     )
 
 
+class CrateDBType(SqlglotType):
+    dialect = "crate"
+    default_interval_precision = "s"
+
+    unknown_type_strings = FrozenDict(
+        {
+            "vector": dt.unknown,
+            "tsvector": dt.unknown,
+            "line": dt.linestring,
+            "line[]": dt.Array(dt.linestring),
+            "polygon": dt.polygon,
+            "polygon[]": dt.Array(dt.polygon),
+            "point": dt.point,
+            "point[]": dt.Array(dt.point),
+            "macaddr": dt.macaddr,
+            "macaddr[]": dt.Array(dt.macaddr),
+            "macaddr8": dt.macaddr,
+            "macaddr8[]": dt.Array(dt.macaddr),
+            "timestamp with time zone": dt.Timestamp,
+            "timestamp without time zone": dt.Timestamp,
+        }
+    )
+
+
 class MySQLType(SqlglotType):
     dialect = "mysql"
 
