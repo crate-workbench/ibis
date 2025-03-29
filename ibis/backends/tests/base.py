@@ -149,16 +149,22 @@ class BackendTest(abc.ABC):
             root_tmp_dir = root_tmp_dir.parent
 
         fn = root_tmp_dir / (getattr(cls, "service_name", None) or cls.name())
-        with FileLock(f"{fn}.lock"):
+        print("AGAIN?")
+        with FileLock(f"{fn}.lock") as fl:
+            print("LOCK FILE:", fl.lock_file)
             cls.skip_if_missing_deps()
 
+            print("MORE")
             inst = cls(data_dir=data_dir, tmpdir=tmpdir, worker_id=worker_id, **kw)
 
+            print("LOADING")
             if inst.stateful:
                 inst.stateful_load(fn, **kw)
             else:
                 inst.stateless_load(**kw)
+            print("LOADED")
             inst.postload(tmpdir=tmpdir, worker_id=worker_id, **kw)
+            print("POSTLOAD")
             return inst
 
     @classmethod

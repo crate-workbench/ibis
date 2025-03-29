@@ -346,4 +346,7 @@ def table(name):
 
 @pytest.fixture
 def alltypes():
+    print("alltypes-expr")
+    hotzenplotz
+    return
     return table("alltypes")
